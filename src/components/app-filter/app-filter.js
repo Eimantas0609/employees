@@ -1,19 +1,27 @@
 import "./app-filter.css";
 
-const AppFilter = () => {
-	return (
-		<div className="btn-group">
-			<button type="button" className="btn btn-light">
-				Visi darbuotojai
+const AppFilter = (props) => {
+	const buttonsData = [
+		{ name: "all", label: "Visi darbuotojai" },
+		{ name: "rise", label: "Paaukštinti" },
+		{ name: "moreThen1000", label: "Atlyginimas didesnis nei 1000EU" },
+	];
+
+	const buttons = buttonsData.map(({ name, label }) => {
+		const active = props.filter === name;
+		const clazz = active ? "btn-light" : "btn-outline-light";
+		return (
+			<button
+				type="button"
+				className={`btn ${clazz}`}
+				key={name}
+				onClick={() => props.onFilterSelect(name)}>
+				{label}
 			</button>
-			<button type="button" className="btn btn-outline-light">
-				Paaukštinti
-			</button>
-			<button type="button" className="btn btn-outline-light">
-				Alga didesnė nei 1000 EU
-			</button>
-		</div>
-	);
+		);
+	});
+
+	return <div className="btn-group">{buttons}</div>;
 };
 
 export default AppFilter;
